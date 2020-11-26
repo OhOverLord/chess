@@ -60,14 +60,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
     @property
-    def token(self):
+    def access_token(self):
         return self._generate_jwt_token()
 
-    def get_full_name(self):
-        return self.username
-
-    def get_short_name(self):
-        return self.username
+    @property
+    def refresh_token(self):
+        return self._generate_refresh_token()
 
     def _generate_jwt_token(self):
         dt = datetime.now() + timedelta(days=60)
@@ -78,3 +76,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         }, settings.SECRET_KEY, algorithm='HS256')
 
         return token.decode('utf-8')
+
+    def _generate_refresh_token(self):
+        refresh_token_payload = {
+            'id': self.pk,
+            'exp': datetime.utcnow() + timedelta(days=7),
+            'iat': datetime.utcnow()
+        }
+        refresh_token = jwt.encode(
+            refresh_token_payload, settings.REFRESH_TOKEN_SECRET, algorithm='HS256').decode('utf-8')
+
+        return refresh_token

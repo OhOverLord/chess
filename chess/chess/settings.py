@@ -3,7 +3,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = '6edv6wlk%*&42x0k_+ee%2-a+g+fzx6k@vx#r@88bgq$-n0lz#'
+SECRET_KEY = '6edv6wlk%*&42x0k_+ee%2-a+g+fzx6k@vx#r@x#r@88bgqlz#'
+REFRESH_TOKEN_SECRET = '6edv6wl2-a+g+fzx6k@k%*&4x#r@88bgq2x0k_x#r@88bgq+ee'
 
 DEBUG = True
 
